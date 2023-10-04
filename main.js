@@ -2,7 +2,9 @@ const transactionsUl = document.querySelector('#transactions');
 const incomeDisplay = document.querySelector('#money-plus');
 const expenseDisplay = document.querySelector('#money-minus');
 const totalDisplay = document.querySelector('#balance');
-
+const form = document.querySelector('#form');
+const inputName = document.querySelector('#text');
+const inputAmount = document.querySelector('#amount');
 
 const dummyTransactions = [
     { id: 1, name: 'Bolo de pote', amount: -20 },
@@ -53,4 +55,16 @@ const init = () => {
     dummyTransactions.forEach(addTransactionsDOM)
     updateValue()
 }
+
 init()
+
+form.addEventListener('submit', event =>{
+    event.preventDefault()
+    if(inputName.value.trim() === '' || inputAmount.value.trim() === ''){
+        alert(`campo vazio`)
+        return
+    }
+    const idd = dummyTransactions.length + 1;
+    dummyTransactions.unshift({ id: 9, name: inputName.value, amount: inputAmount.value })
+    console.log(idd)
+})
