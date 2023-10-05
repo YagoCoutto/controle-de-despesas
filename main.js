@@ -2,6 +2,7 @@ const transactionsUl = document.querySelector('#transactions');
 const incomeDisplay = document.querySelector('#money-plus');
 const expenseDisplay = document.querySelector('#money-minus');
 const totalDisplay = document.querySelector('#balance');
+const deleteTransaction = document.querySelector('#delete-btn');
 const form = document.querySelector('#form');
 const inputName = document.querySelector('#text');
 const inputAmount = document.querySelector('#amount');
@@ -23,10 +24,10 @@ const addTransactionsDOM = transaction => {
     li.classList.add(CSSClass)
     li.innerHTML = `
             ${transaction.name} <span>${operator} R$ ${amountOperator}</span><button class="delete-btn">x</button>
-
     `;
 
     transactionsUl.prepend(li)
+
 }
 
 const updateValue = () => {
@@ -52,19 +53,38 @@ const updateValue = () => {
 
 
 const init = () => {
+    transactionsUl.innerHTML = ''
     dummyTransactions.forEach(addTransactionsDOM)
     updateValue()
 }
 
 init()
 
+const generateID = () => Math.round(Math.random() * 1000)
+
 form.addEventListener('submit', event =>{
     event.preventDefault()
-    if(inputName.value.trim() === '' || inputAmount.value.trim() === ''){
+
+    const nameValue = inputName.value.trim();
+    const amountValue = inputAmount.value.trim();
+    const idValue = generateID();
+
+    if(nameValue === '' || amountValue === ''){
         alert(`campo vazio`)
         return
     }
-    const idd = dummyTransactions.length + 1;
-    dummyTransactions.unshift({ id: 9, name: inputName.value, amount: inputAmount.value })
-    console.log(idd)
+    const transaction = ({ 
+        id: idValue, 
+        name: nameValue, 
+        amount: Number(amountValue)
+    });
+
+    dummyTransactions.push(transaction)
+    init()
+
+    inputName.value = ''
+    inputAmount.value = ''
+
 })
+
+console.log(deleteTransaction)
