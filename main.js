@@ -8,9 +8,10 @@ const inputName = document.querySelector('#text');
 const inputAmount = document.querySelector('#amount');
 
 const localStorageTransactions = JSON.parse(localStorage
-    .getItem('transactions'))
+    .getItem('transactions'));
+
 let transactions = localStorage
-    .getItem('transacions') !== null ? localStorageTransactions : []
+    .getItem('transactions') !== null ? localStorageTransactions : []
 
 const removeTransaction = ID => {
     transactions = transactions.filter(transaction => 
@@ -77,21 +78,21 @@ form.addEventListener('submit', event => {
 
     const nameValue = inputName.value.trim();
     const amountValue = inputAmount.value.trim();
-    const idValue = generateID();
+   // const idValue = generateID();
 
     if (nameValue === '' || amountValue === '') {
         alert(`campo vazio`)
         return
     }
     const transaction = ({
-        id: idValue,
+        id: generateID(),
         name: nameValue,
         amount: Number(amountValue)
     });
 
     transactions.push(transaction)
-    updateLocalStorage()
     init()
+    updateLocalStorage()
 
     inputName.value = ''
     inputAmount.value = ''
